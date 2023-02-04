@@ -9,3 +9,4 @@ const API = axios.create({
 });
 
 export const fetchPosts = () => API.get(`/posts`);
+export const createPosts = (data: object) => API.post("/posts", data);

@@ -1,27 +1,41 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "./redux/hooks/hooks";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   selectCount,
   increment,
   decrement,
 } from "./redux/slices/counter/counterSlice";
-import * as API from "./api/index";
+import {
+  fetchData,
+  createData,
+  selectData,
+} from "./redux/slices/posts/postSlice";
 
 function App() {
   const count = useAppSelector(selectCount);
+  const dataRedux = useAppSelector(selectData);
   const dispatch = useAppDispatch();
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
-  async function fetchData(): Promise<any> {
-    try {
-      await API.fetchPosts().then((res) => console.log(res));
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+  const titleHandler = (e: any) => {
+    setTitle(e.target.value);
+  };
 
-  fetchData()
+  const bodyHandler = (e: any) => {
+    setBody(e.target.value);
+  };
+
+  useEffect(() => {
+    fetchData(dispatch);
+  }, [dispatch]);
+
+  const data = { title: title, body: body };
+
+  const ClickHandler = () => {
+    createData(dispatch, data);
+  };
 
   return (
     <Flex
@@ -33,9 +47,14 @@ function App() {
       gap="20px"
     >
       <Text>{count}</Text>
+      <Input title="title" onChange={titleHandler} />
+      <Input title="body" onChange={bodyHandler} />
       <Button onClick={() => dispatch(increment())}>add</Button>
       <Button onClick={() => dispatch(decrement())}>minus</Button>
-      <Button>getData</Button>
+      <Button onClick={ClickHandler}>add data</Button>
+      {dataRedux?.map((data: any) => {
+        return <Text key={data.title}>{data.title}</Text>;
+      })}
     </Flex>
   );
 }
