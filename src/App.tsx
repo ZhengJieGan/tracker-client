@@ -2,29 +2,25 @@ import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "./redux/hooks/hooks";
 import React, { useEffect, useState } from "react";
 import {
-  selectCount,
-  increment,
-  decrement,
-} from "./redux/slices/counter/counterSlice";
-import {
   fetchData,
   createData,
   selectData,
+  deleteData,
+  editData,
 } from "./redux/slices/posts/postSlice";
 
 function App() {
-  const count = useAppSelector(selectCount);
   const dataRedux = useAppSelector(selectData);
   const dispatch = useAppDispatch();
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
 
-  const titleHandler = (e: any) => {
-    setTitle(e.target.value);
+  const titleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
   };
 
-  const bodyHandler = (e: any) => {
-    setBody(e.target.value);
+  const bodyHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setBody(event.target.value);
   };
 
   useEffect(() => {
@@ -33,27 +29,63 @@ function App() {
 
   const data = { title: title, body: body };
 
-  const ClickHandler = () => {
+  const clickHandler = () => {
     createData(dispatch, data);
+  };
+
+  const editHandler = (title: string, body: string) => {
+    console.log(title, body);
+    setTitle(title);
+    setBody(body);
+  };
+
+  const saveHandler = (id: string) => {
+    // Send data to server
+    const newData = { title: title, body: body };
+    editData(dispatch, id, newData);
+  };
+
+  const deleteHandler = (
+    id: string,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    deleteData(dispatch, id);
   };
 
   return (
     <Flex
-      height="100vh"
+      height="100%"
       width="100vw"
       justify="center"
       align="center"
       direction="column"
       gap="20px"
     >
-      <Text>{count}</Text>
-      <Input title="title" onChange={titleHandler} />
-      <Input title="body" onChange={bodyHandler} />
-      <Button onClick={() => dispatch(increment())}>add</Button>
-      <Button onClick={() => dispatch(decrement())}>minus</Button>
-      <Button onClick={ClickHandler}>add data</Button>
+      <Input title="title" onChange={titleHandler} value={title} />
+      <Input title="body" onChange={bodyHandler} value={body}/>
+      <Button onClick={clickHandler}>add data</Button>
       {dataRedux?.map((data: any) => {
-        return <Text key={data.title}>{data.title}</Text>;
+        return (
+          <Flex
+            key={data?._id?.$oid}
+            direction="column"
+            gap="10px"
+            justify="center"
+            align="center"
+            backgroundColor="lightblue"
+            borderRadius="10px"
+          >
+            <Text>{data.title}</Text>
+            <Text>{data.body}</Text>
+            <Button onClick={(e) => editHandler(data.title, data.body)}>
+              Edit
+            </Button>
+            <Button onClick={(e) => saveHandler(data?._id?.$oid)}>Save</Button>
+            <Button onClick={(e) => deleteHandler(data?._id?.$oid, e)}>
+              Delete
+            </Button>
+          </Flex>
+        );
       })}
     </Flex>
   );
