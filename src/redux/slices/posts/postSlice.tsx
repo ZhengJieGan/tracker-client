@@ -15,39 +15,39 @@ export const postSlice = createSlice({
   initialState,
 
   reducers: {
-    updateData: (state, action: PayloadAction<Array<any>>) => {
+    updatePost: (state, action: PayloadAction<Array<any>>) => {
       state.data = action.payload;
     },
   },
 });
 
-export async function fetchData(dispatch: any): Promise<any> {
+export async function fetchPost(dispatch: any): Promise<any> {
   try {
     // Retrieve the data from the API
     const data = await API.fetchPosts();
 
     // Insert the data into the store
-    dispatch(updateData(data?.data?.data));
+    dispatch(updatePost(data?.data));
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
 
-export async function createData(dispatch: any, data: object): Promise<any> {
+export async function createPost(dispatch: any, data: object): Promise<any> {
   try {
     // Retrieve the data from the API
     const response = await API.createPosts(data);
 
     // Insert the data into the store
-    dispatch(updateData(response?.data));
+    dispatch(updatePost(response?.data));
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
 
-export async function editData(
+export async function editPost(
   dispatch: any,
   id: string,
   data: object
@@ -57,28 +57,49 @@ export async function editData(
     const response = await API.updatePosts(id, data);
 
     // Insert the data into the store
-    dispatch(updateData(response?.data));
+    dispatch(updatePost(response?.data));
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
 
-export async function deleteData(dispatch: any, id: string): Promise<any> {
+export async function deletePost(dispatch: any, id: string): Promise<any> {
   try {
     // Retrieve the data from the API
     const response = await API.deletePosts(id);
 
     // Insert the data into the store
-    dispatch(updateData(response?.data));
+    dispatch(updatePost(response?.data));
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
 
-export const { updateData } = postSlice.actions;
+interface data {
+  name: string;
+  message: string;
+  id: string;
+}
 
-export const selectData = (state: RootState) => state.post.data;
+export async function createComment(dispatch: any, data: data): Promise<any> {
+  try {
+    // console.log(data.name)
+    // Retrieve the data from the API
+    const response = await API.createComments("name", "test", data.id);
+    console.log(response.data);
+
+    // Insert the data into the store
+    dispatch(updatePost(response?.data));
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export const { updatePost } = postSlice.actions;
+
+export const selectPost = (state: RootState) => state.post.data;
 
 export default postSlice.reducer;
