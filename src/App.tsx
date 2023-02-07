@@ -44,18 +44,12 @@ function App() {
   };
 
   const data = { title: title, body: body };
-  const comment = {
-    name: "test",
-    message: "test",
-    id: "63df7cc977bd49a3941ea902",
-  };
 
   const clickHandler = () => {
     createPost(dispatch, data);
   };
 
   const addCommentHandler = (id: string) => {
-    // console.log(id)
     createComment(dispatch, { name: "comment", message: "message", id: id });
   };
 
