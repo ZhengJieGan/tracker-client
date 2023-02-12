@@ -19,20 +19,21 @@ function RequiredAuth(props: any) {
 
   const [valid, setValid] = useState<boolean>(true);
 
+
   setTimeout(function () {
+    console.log(valid)
     if (serverId !== localId) {
+    
       setValid(false);
     } else {
       setValid(true);
     }
-  }, 2500);
+  }, 2000);
 
   if (valid === false) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
     return <Navigate to="/login" state={location.pathname} replace={true} />;
+  } else {
+
   }
 
   return props.children;

@@ -32,7 +32,7 @@ export const Login = () => {
     if (validation === true) {
       navigate("/");
     } else {
-      console.log("Login failed");
+
     }
   }, [validation, navigate]);
 

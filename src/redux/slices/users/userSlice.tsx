@@ -109,7 +109,6 @@ export async function getUser(dispatch: any): Promise<any> {
   try {
     // Retrieve the data from the API
     const { data } = await API.getUser();
-    console.log(data);
 
     const payload = {
       id: data?.user?._id?.$oid,
