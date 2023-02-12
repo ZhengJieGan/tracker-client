@@ -5,16 +5,19 @@ import { store } from "./redux/store";
 import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./assets/theme";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ChakraProvider>
+    <BrowserRouter>
+      <ChakraProvider theme={theme}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ChakraProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

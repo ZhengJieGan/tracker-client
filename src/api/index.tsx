@@ -9,7 +9,7 @@ const API = axios.create({
 });
 
 // For posts
-export const fetchPosts = () => API.get(`/posts`);
+export const fetchPosts = () => API.get("/posts");
 export const createPosts = (data: object) => API.post("/posts", data);
 export const updatePosts = (id: string, data: object) =>
   API.put(`/posts/${id}`, data);
@@ -26,7 +26,7 @@ export const createComments = (
 // For users
 export const signUp = (name: string, email: string, password: string) =>
   API.post("/signup", { name: name, email: email, password: password });
-export const signIn = (name: string, email: string, password: string) =>
-  API.post("/login", { name: name, email: email, password: password });
-export const signOut = () =>
-  API.delete("/logout");
+export const signIn = (email: string, password: string) =>
+  API.post("/login", { email: email, password: password });
+export const signOut = () => API.delete("/logout");
+export const getUser = () => API.get("/user");

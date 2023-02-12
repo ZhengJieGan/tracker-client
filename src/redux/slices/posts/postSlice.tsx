@@ -36,8 +36,11 @@ export async function fetchPost(dispatch: any): Promise<any> {
 
 export async function createPost(dispatch: any, data: object): Promise<any> {
   try {
+
+    console.log(data)
     // Retrieve the data from the API
     const response = await API.createPosts(data);
+    console.log(response)
 
     // Insert the data into the store
     dispatch(updatePost(response?.data));
