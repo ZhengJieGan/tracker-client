@@ -4,10 +4,12 @@ import * as API from "../../../api/index";
 
 export interface PostState {
   data: Array<any>;
+  total: number;
 }
 
 const initialState: PostState = {
   data: [],
+  total: 0,
 };
 
 export const postSlice = createSlice({
@@ -18,16 +20,21 @@ export const postSlice = createSlice({
     updatePost: (state, action: PayloadAction<Array<any>>) => {
       state.data = action.payload;
     },
+    updateTotal: (state, action: PayloadAction<number>) => {
+      state.total = action.payload;
+    },
   },
 });
 
-export async function fetchPost(dispatch: any): Promise<any> {
+export async function fetchPost(dispatch: any, page: number): Promise<any> {
   try {
     // Retrieve the data from the API
-    const data = await API.fetchPosts();
+    const data = await API.fetchPosts(page);
+    console.log(data)
 
     // Insert the data into the store
-    dispatch(updatePost(data?.data));
+    dispatch(updatePost(data?.data?.posts));
+    dispatch(updateTotal(data?.data?.total_posts))
   } catch (error) {
     console.error(error);
     throw error;
@@ -36,11 +43,10 @@ export async function fetchPost(dispatch: any): Promise<any> {
 
 export async function createPost(dispatch: any, data: object): Promise<any> {
   try {
-
-    console.log(data)
+    console.log(data);
     // Retrieve the data from the API
     const response = await API.createPosts(data);
-    console.log(response)
+    console.log(response);
 
     // Insert the data into the store
     dispatch(updatePost(response?.data));
@@ -101,8 +107,9 @@ export async function createComment(dispatch: any, data: data): Promise<any> {
   }
 }
 
-export const { updatePost } = postSlice.actions;
+export const { updatePost, updateTotal } = postSlice.actions;
 
 export const selectPost = (state: RootState) => state.post.data;
+export const selectTotal = (state: RootState) => state.post.total;;
 
 export default postSlice.reducer;

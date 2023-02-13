@@ -28,16 +28,20 @@ export const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  useEffect(() => {
-    if (validation === true) {
-      navigate("/");
-    } else {
-
-    }
-  }, [validation, navigate]);
+  // useEffect(() => {
+  //   if (validation === true) {
+  //     navigate("/");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, [validation, navigate]);
 
   const loginUserHandler = () => {
     loginUser(dispatch, { email, password })
+
+    if(validation === true) { 
+      navigate("/");
+    }
   };
 
   const emailHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
