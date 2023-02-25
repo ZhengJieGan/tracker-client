@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://127.0.0.1:5000",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -30,3 +30,20 @@ export const signIn = (email: string, password: string) =>
   API.post("/login", { email: email, password: password });
 export const signOut = () => API.delete("/logout");
 export const getUser = () => API.get("/user");
+
+// For carts
+export const fetchCart = () => API.get("/carts");
+export const insertCart = (
+  item_id: string,
+  quantity: number,
+  user_id: string | null
+) =>
+  API.post("/carts", {
+    item_id: item_id,
+    quantity: quantity,
+    user_id: user_id,
+  });
+export const deleteFromCart = (id: string) => API.delete(`/carts/${id}`);
+
+// For items
+export const fetchItems = () => API.get("/items");

@@ -3,10 +3,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SidebarWithHeader from "../../components/sidebar";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { getUser } from "../../redux/slices/users/userSlice";
-import { Home } from "../home/home";
+import { Shop } from "../shop/shop";
 import { Profile } from "../Profile/profile";
-import { Tracker } from "../tracker/tracker";
+import { Cart } from "../cart/cart";
 import { Trending } from "../trending/trending";
+import { fetchItem } from "../../redux/slices/item/itemSlice";
+import { fetchCart } from "../../redux/slices/cart/cartSlice";
+import { fetchPost } from "../../redux/slices/posts/postSlice";
 
 export const Dashboard = () => {
   const location = useLocation();
@@ -15,24 +18,27 @@ export const Dashboard = () => {
 
   useEffect(() => {
     getUser(dispatch);
+    fetchItem(dispatch);
+    fetchCart(dispatch);
+    fetchPost(dispatch, 1);
   }, [location, navigate, dispatch]);
 
   const renderComponent = () => {
     switch (location.pathname) {
-      case "/home":
-        return <Home />;
+      case "/shop":
+        return <Shop />;
 
       case "/trending":
         return <Trending />;
 
-      case "/tracker":
-        return <Tracker />;
+      case "/cart":
+        return <Cart />;
 
       case "/profile":
         return <Profile />;
 
       default:
-        return <Home />;
+        return <Shop />;
     }
   };
 

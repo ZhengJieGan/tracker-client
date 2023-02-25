@@ -3,6 +3,8 @@ import counterReducer from "./slices/counter/counterSlice";
 import postReducer from "./slices/posts/postSlice";
 import commentReducer from "./slices/comments/commentSlice";
 import userReducer from "./slices/users/userSlice";
+import cartReducer from "./slices/cart/cartSlice";
+import itemReducer from "./slices/item/itemSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     post: postReducer,
     comment: commentReducer,
     user: userReducer,
+    cart: cartReducer,
+    item: itemReducer,
   },
 });
 

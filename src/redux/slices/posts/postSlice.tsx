@@ -30,11 +30,11 @@ export async function fetchPost(dispatch: any, page: number): Promise<any> {
   try {
     // Retrieve the data from the API
     const data = await API.fetchPosts(page);
-    console.log(data)
+    // console.log(data)
 
     // Insert the data into the store
     dispatch(updatePost(data?.data?.posts));
-    dispatch(updateTotal(data?.data?.total_posts))
+    dispatch(updateTotal(data?.data?.total_posts));
   } catch (error) {
     console.error(error);
     throw error;
@@ -46,7 +46,7 @@ export async function createPost(dispatch: any, data: object): Promise<any> {
     console.log(data);
     // Retrieve the data from the API
     const response = await API.createPosts(data);
-    console.log(response);
+    // console.log(response);
 
     // Insert the data into the store
     dispatch(updatePost(response?.data));
@@ -110,6 +110,6 @@ export async function createComment(dispatch: any, data: data): Promise<any> {
 export const { updatePost, updateTotal } = postSlice.actions;
 
 export const selectPost = (state: RootState) => state.post.data;
-export const selectTotal = (state: RootState) => state.post.total;;
+export const selectTotal = (state: RootState) => state.post.total;
 
 export default postSlice.reducer;

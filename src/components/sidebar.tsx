@@ -39,9 +39,9 @@ interface LinkItemProps {
   link: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome, link: "home" },
+  { name: "Shop", icon: FiHome, link: "shop" },
   { name: "Trending", icon: FiTrendingUp, link: "trending" },
-  { name: "Tracker", icon: FiArrowUpCircle, link: "tracker" },
+  { name: "Cart", icon: FiArrowUpCircle, link: "cart" },
   { name: "Profile", icon: FiUser, link: "profile" },
 ];
 
