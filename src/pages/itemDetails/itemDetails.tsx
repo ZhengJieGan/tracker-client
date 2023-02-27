@@ -17,7 +17,7 @@ import {
   List,
   ListItem,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube, FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
