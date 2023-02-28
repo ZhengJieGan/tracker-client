@@ -24,6 +24,8 @@ export const cartSlice = createSlice({
 interface data {
   itemId: string;
   quantity: number;
+  title: string;
+  image: string;
   userId: string | null;
 }
 
@@ -47,6 +49,8 @@ export async function updateCart(dispatch: any, data: data): Promise<any> {
     const response = await API.insertCart(
       data.itemId,
       data.quantity,
+      data.title,
+      data.image,
       data.userId
     );
 

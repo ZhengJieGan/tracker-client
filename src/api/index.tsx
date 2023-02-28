@@ -36,11 +36,15 @@ export const fetchCart = () => API.get("/carts");
 export const insertCart = (
   item_id: string,
   quantity: number,
+  title: string,
+  image: string,
   user_id: string | null
 ) =>
   API.post("/carts", {
     item_id: item_id,
     quantity: quantity,
+    title: title,
+    image: image,
     user_id: user_id,
   });
 export const deleteFromCart = (id: string) => API.delete(`/carts/${id}`);
